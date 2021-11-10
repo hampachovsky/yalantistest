@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useAppSelector } from 'hooks/useAppSelector';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Redirect, Route, Switch } from 'react-router';
+import { fetchEmployees } from 'store/reducers/employees/employeesActionCreators';
 import './App.css';
+import { Employees } from './pages/Employees';
 
 function App() {
+  const dispatch = useDispatch();
+  const employees = useAppSelector((state) => state.employeesReducer.employees);
+  console.log(employees);
+  useEffect(() => {
+    //dispatch(fetchEmployees());
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <Switch>
+        <Route path='/employees'>
+          <Employees />
+        </Route>
+        <Redirect to='/employees' />
+      </Switch>
     </div>
   );
 }
