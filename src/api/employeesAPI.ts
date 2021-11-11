@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Employees } from 'store/reducers/employees/types';
 
 export const employeesAPI = {
   getEmployees() {

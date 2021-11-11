@@ -11,8 +11,8 @@ function App() {
   const employees = useAppSelector((state) => state.employeesReducer.employees);
   console.log(employees);
   useEffect(() => {
-    //dispatch(fetchEmployees());
-  }, []);
+    // dispatch(fetchEmployees());
+  }, [dispatch]);
   return (
     <div className='App'>
       <Switch>
