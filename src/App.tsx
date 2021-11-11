@@ -9,7 +9,6 @@ import { Employees } from './pages/Employees';
 function App() {
   const dispatch = useDispatch();
   const employees = useAppSelector((state) => state.employeesReducer.employees);
-  console.log(employees);
   useEffect(() => {
     // dispatch(fetchEmployees());
   }, [dispatch]);

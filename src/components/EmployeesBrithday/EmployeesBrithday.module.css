@@ -2,3 +2,13 @@
   border-left: 1px solid #000;
   width: 20%;
 }
+
+.monthHead {
+  text-align: center;
+  color: green;
+}
+
+.monthWrapper {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #000;
+}

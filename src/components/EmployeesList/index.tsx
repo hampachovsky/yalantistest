@@ -1,7 +1,7 @@
 import { Employee } from 'components/Employee';
 import { useAppSelector } from 'hooks/useAppSelector';
 import React from 'react';
-import { checkFilledLetter } from 'utils/checkFilledLetter';
+import { checkFilled } from 'utils/checkFilled';
 import { sortByName } from 'utils/sortByName';
 import style from './Employees.module.css';
 
@@ -9,8 +9,9 @@ export const EmployeesList: React.FC = () => {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
   const employees = useAppSelector((state) => state.employeesReducer.employees);
   const employeesCopy = employees.slice();
-  const filledLetters = checkFilledLetter(alphabet, employees);
-  sortByName(employeesCopy);
+  const activeEmployee = useAppSelector((state) => state.employeesReducer.active);
+  const filledLetters = checkFilled(alphabet, employees, 'checkLetter');
+  sortByName(employeesCopy, 'firstName');
 
   const alpabetList = alphabet.map((letter: string) => {
     return (
@@ -26,6 +27,7 @@ export const EmployeesList: React.FC = () => {
                   lastName={it.lastName}
                   id={it.id}
                   dob={it.dob}
+                  activeEmployee={activeEmployee}
                 />
               ),
           )
@@ -35,5 +37,12 @@ export const EmployeesList: React.FC = () => {
       </div>
     );
   });
-  return <div className={style.list}>{alpabetList}</div>;
+  return (
+    <div className={style.employeesWrapper}>
+      <div>
+        <h1>Employees</h1>
+      </div>
+      <div className={style.list}>{alpabetList}</div>
+    </div>
+  );
 };

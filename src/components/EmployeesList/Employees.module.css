@@ -2,11 +2,18 @@
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  width: 80%;
 }
 
 .letterWrapper {
   width: 30%;
   border-top: 1px solid #000;
   margin-top: 20px;
+}
+
+.employeesWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 80%;
 }

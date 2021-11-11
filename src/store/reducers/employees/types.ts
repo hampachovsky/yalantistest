@@ -1,8 +1,8 @@
 export interface Employee {
   id: string;
   firstName: string;
-  lastName: string | null;
-  dob?: string | null;
+  lastName: string;
+  dob: string;
 }
 
 export interface InitialState {
