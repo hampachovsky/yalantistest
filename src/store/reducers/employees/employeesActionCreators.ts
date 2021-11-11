@@ -3,8 +3,9 @@ import { AppDispatch } from 'store';
 import {
   Employee,
   EmployeesActionEnum,
-  ToggleActiveEmployeeAction,
   SetEmployeesAction,
+  SetFetchingAction,
+  ToggleActiveEmployeeAction,
   toggleActiveEmployeePayload,
 } from './types';
 
@@ -12,15 +13,23 @@ export const setEmployees = (payload: Employee[]): SetEmployeesAction => ({
   type: EmployeesActionEnum.SET_EMPLOYEES,
   payload,
 });
-
-export const toggleActiveEmployee = (
-  payload: toggleActiveEmployeePayload,
-): ToggleActiveEmployeeAction => ({
-  type: EmployeesActionEnum.TOGGLE_ACTIVE_EMPLOYEE,
+export const setFetching = (payload: boolean): SetFetchingAction => ({
+  type: EmployeesActionEnum.SET_FETCHING,
   payload,
 });
 
+export const toggleActiveEmployee = (
+  payload: toggleActiveEmployeePayload,
+): ToggleActiveEmployeeAction => {
+  return {
+    type: EmployeesActionEnum.TOGGLE_ACTIVE_EMPLOYEE,
+    payload,
+  };
+};
+
 export const fetchEmployees = () => async (dispatch: AppDispatch) => {
+  dispatch(setFetching(true));
   const response = await employeesAPI.getEmployees();
-  dispatch(setEmployees(response));
+  await dispatch(setEmployees(response));
+  dispatch(setFetching(false));
 };

@@ -7,16 +7,19 @@ export interface Employee {
 
 export interface InitialState {
   employees: Employee[];
-  active: Employee[];
+  active: string[];
+  isFetching: boolean;
 }
 
 export enum EmployeesActionEnum {
   SET_EMPLOYEES = 'employees/SET_EMPLOYEES',
   TOGGLE_ACTIVE_EMPLOYEE = 'employees/TOGGLE_ACTIVE_EMPLOYEE',
+  SET_FETCHING = 'employees/SET_FETCHING',
 }
 
-export interface toggleActiveEmployeePayload extends Employee {
+export interface toggleActiveEmployeePayload {
   isActive: boolean;
+  id: string;
 }
 
 export interface ToggleActiveEmployeeAction {
@@ -28,5 +31,9 @@ export interface SetEmployeesAction {
   type: EmployeesActionEnum.SET_EMPLOYEES;
   payload: Employee[];
 }
+export interface SetFetchingAction {
+  type: EmployeesActionEnum.SET_FETCHING;
+  payload: boolean;
+}
 
-export type EmployeesAction = SetEmployeesAction | ToggleActiveEmployeeAction;
+export type EmployeesAction = SetEmployeesAction | ToggleActiveEmployeeAction | SetFetchingAction;

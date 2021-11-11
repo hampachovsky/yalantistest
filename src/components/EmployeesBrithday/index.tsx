@@ -1,6 +1,7 @@
 import { useAppSelector } from 'hooks/useAppSelector';
-import moment from 'moment';
 import React from 'react';
+import { getActiveEmployee } from 'store/reducers/employees/selectors';
+import { Employee } from 'store/reducers/employees/types';
 import { checkFilled } from 'utils/checkFilled';
 import { formateDate } from 'utils/formateDate';
 import { sortByName } from 'utils/sortByName';
@@ -21,17 +22,23 @@ export const EmployeesBrithday = () => {
     'September',
     'October',
   ];
-  const activeEmployee = useAppSelector((state) => state.employeesReducer.active);
+  const activeEmployee = Array.from(useAppSelector(getActiveEmployee));
   const activeEmployeeCopy = activeEmployee.slice();
-  sortByName(activeEmployeeCopy, 'lastName');
+  const employee = useAppSelector((state) => state.employeesReducer.employees);
+  const founded: Employee[] = [];
+  for (let i = 0; i < activeEmployeeCopy.length; i++) {
+    founded.push(...employee.filter((it: any) => it.id === activeEmployeeCopy[i]));
+  }
 
-  const filledMonth: string[] = checkFilled(months, activeEmployee, 'checkMonth');
+  sortByName(founded, 'lastName');
+
+  const filledMonth: string[] = checkFilled(months, founded, 'checkMonth');
 
   return (
     <div className={style.employeesBirthday}>
       <h1>Employees birthday</h1>
       <hr />
-      {!activeEmployee.length ? (
+      {!founded.length ? (
         <h3>Employees List is empty</h3>
       ) : (
         months.map((month) => {
@@ -39,7 +46,7 @@ export const EmployeesBrithday = () => {
             <div key={month} className={style.monthWrapper}>
               <h3 className={style.monthHead}>{month}</h3>
               {filledMonth.includes(month) ? (
-                activeEmployeeCopy.map((it) => {
+                founded.map((it: any) => {
                   return formateDate(it.dob, 'toMonth') === month ? (
                     <li key={it.id} className={style.employee}>
                       <strong>

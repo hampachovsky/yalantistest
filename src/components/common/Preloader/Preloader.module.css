@@ -1,0 +1,52 @@
+.preloader {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preloader {
+  position: relative;
+  display: inline-flex;
+}
+
+.preloader:before,
+.preloader:after,
+.preloader *:after {
+  content: '';
+}
+
+.preloader:before,
+.preloader:after,
+.preloader * {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: #333;
+}
+.preloader * {
+  margin: 0 2px;
+}
+
+.preloader *:after {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+
+  width: 5px;
+  height: 5px;
+  border-radius: inherit;
+  background-color: inherit;
+
+  animation: eye 1s linear infinite alternate;
+}
+
+@keyframes eye {
+  from {
+    left: 0px;
+  }
+  to {
+    left: 20px;
+  }
+}

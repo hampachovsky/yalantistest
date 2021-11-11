@@ -1,6 +1,7 @@
 import { Employee } from 'components/Employee';
 import { useAppSelector } from 'hooks/useAppSelector';
 import React from 'react';
+import { getActiveEmployee } from 'store/reducers/employees/selectors';
 import { checkFilled } from 'utils/checkFilled';
 import { sortByName } from 'utils/sortByName';
 import style from './Employees.module.css';
@@ -8,10 +9,10 @@ import style from './Employees.module.css';
 export const EmployeesList: React.FC = () => {
   const alphabet = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
   const employees = useAppSelector((state) => state.employeesReducer.employees);
+  const activeEmployee = useAppSelector(getActiveEmployee);
   const employeesCopy = employees.slice();
-  const activeEmployee = useAppSelector((state) => state.employeesReducer.active);
-  const filledLetters = checkFilled(alphabet, employees, 'checkLetter');
   sortByName(employeesCopy, 'firstName');
+  const filledLetters = checkFilled(alphabet, employees, 'checkLetter');
 
   const alpabetList = alphabet.map((letter: string) => {
     return (

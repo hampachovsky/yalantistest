@@ -1,3 +1,4 @@
+import { Preloader } from 'components/common/Preloader';
 import { useAppSelector } from 'hooks/useAppSelector';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -8,12 +9,13 @@ import { Employees } from './pages/Employees';
 
 function App() {
   const dispatch = useDispatch();
-  const employees = useAppSelector((state) => state.employeesReducer.employees);
+  const isFetching = useAppSelector((state) => state.employeesReducer.isFetching);
   useEffect(() => {
-    // dispatch(fetchEmployees());
+    dispatch(fetchEmployees());
   }, [dispatch]);
   return (
     <div className='App'>
+      {isFetching && <Preloader />}
       <Switch>
         <Route path='/employees'>
           <Employees />

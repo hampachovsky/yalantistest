@@ -14,6 +14,10 @@ const composeEnhancers =
 const enhancer = composeEnhancers(applyMiddleware(thunk));
 
 export const store = createStore(rootReducer, enhancer);
+store.subscribe(() => {
+  const myData = new Set(store.getState().employeesReducer.active);
+  window.localStorage.setItem('active', JSON.stringify(Array.from(myData)));
+});
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

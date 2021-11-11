@@ -1,41 +1,29 @@
 import clsx from 'clsx';
-import { useAppSelector } from 'hooks/useAppSelector';
-//import { useAppSelector } from 'hooks/useAppSelector';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toggleActiveEmployee } from 'store/reducers/employees/employeesActionCreators';
 import { Employee as EmployeeType } from 'store/reducers/employees/types';
+import { Set } from 'typescript';
 import style from './Employee.module.css';
 
 interface PropsType extends EmployeeType {
-  activeEmployee: EmployeeType[];
+  activeEmployee: Set<string>;
 }
 
 export const Employee: React.FC<PropsType> = ({ firstName, lastName, id, dob, activeEmployee }) => {
   const [active, setActive] = useState<boolean>(false);
-  const [notActive, setNotActive] = useState<boolean>(true);
   const dispatch = useDispatch();
 
-  useMemo(
-    () =>
-      activeEmployee.forEach((it) => {
-        if (it.id === id) setActive(true);
-      }),
-    [activeEmployee, id],
-  );
   useEffect(() => {
-    console.log(activeEmployee);
-    // if (activeEmployee.includes({ firstName, lastName, id, dob }))
-  }, [activeEmployee]);
+    activeEmployee.has(id) && setActive(true);
+  }, [activeEmployee, id]);
 
   useEffect(() => {
-    dispatch(toggleActiveEmployee({ id, firstName, lastName, dob, isActive: active }));
+    dispatch(toggleActiveEmployee({ id, isActive: active }));
   }, [active, dispatch, dob, firstName, id, lastName]);
 
-  const toggleActive = (e: any) => {
-    console.log(e.target.value);
+  const toggleActive = () => {
     setActive(!active);
-    setNotActive(!notActive);
   };
   return (
     <div>
